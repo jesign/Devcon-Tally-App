@@ -20,10 +20,13 @@
 </template>
 
 <script>
+    import RouteApiService from '../../services/RestApiService'
+
     export default {
         name: 'events.vue',
         data: function(){
             return {
+                api : null,
                 events: [
                     {id: 1, title: 'UIC Campus Devcon', description: 'lorem ipsum dolor sit amet'},
                     {id: 2, title: 'ADDU Campus Devcon', description: 'lorem ipsum dolor sit amet'},
@@ -35,7 +38,17 @@
             chooseEvent(event){
                 this.$store.commit('setEvent', event)
                 this.$router.push('event');
+            },
+
+            getEvents(){
+                this.api.index().then(response => {
+                    console.log(response)
+                });
             }
+        },
+        created(){
+            this.api = new RouteApiService('/api/events')
+            this.getEvents()
         }
     }
 </script>
