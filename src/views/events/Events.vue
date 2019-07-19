@@ -1,6 +1,22 @@
 <template>
     <b-row>
         <b-col>
+            <b-modal :visible="showForm" hide-footer @hide="showForm = false; form = {}" title="Create event">
+                <b-form @submit.prevent="saveEvent()">
+                    <b-form-group label="Title">
+                        <b-input v-model="form.title"></b-input>
+                    </b-form-group>
+                    <b-form-group label="Description">
+                        <b-textarea v-model="form.description"></b-textarea>
+                    </b-form-group>
+                    <b-button block variant="success" type="submit">Save</b-button>
+                </b-form>
+            </b-modal>
+            <b-row class="mt-2">
+                <b-col>
+                    <b-button class="float-right" variant="success" @click="showForm = true">Create Event</b-button>
+                </b-col>
+            </b-row>
             <b-card
                 v-for="event in events"
                 no-body
@@ -21,29 +37,42 @@
 
 <script>
     import RouteApiService from '../../services/RestApiService'
+    import axios from 'axios'
 
     export default {
         name: 'events.vue',
         data: function(){
             return {
                 api : null,
-                events: [
-                    {id: 1, title: 'UIC Campus Devcon', description: 'lorem ipsum dolor sit amet'},
-                    {id: 2, title: 'ADDU Campus Devcon', description: 'lorem ipsum dolor sit amet'},
-                    {id: 3, title: 'USEP Campus Devcon', description: 'lorem ipsum dolor sit amet'}
-                ]
+                showForm: false,
+                form: {},
+                events: []
             }
         },
         methods: {
             chooseEvent(event){
                 this.$store.commit('setEvent', event)
-                this.$router.push('event');
+                this.$router.push('event');gst
             },
 
             getEvents(){
                 this.api.index().then(response => {
                     console.log(response)
+                    this.events = response.data
                 });
+            },
+
+            saveEvent(){
+                // console.log(this.api)
+                this.api.save(this.form).then(response => {
+                    this.getEvents()
+                })
+
+                // axios.post(process.env.VUE_APP_API_URL + '/api/events', {
+                //     title: 'asf'
+                // }).then(response => {
+                //     console.log(response)
+                // })
             }
         },
         created(){
