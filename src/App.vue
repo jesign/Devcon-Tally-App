@@ -2,9 +2,8 @@
   <div id="app">
 	  <div>
 		  <b-navbar toggleable="lg" type="dark" variant="info">
-			  <b-navbar-brand href="#">{{title}}</b-navbar-brand>
+			  <b-navbar-brand href="#" v-text="$store.getters.event.title"></b-navbar-brand>
 			  <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
 			  <b-collapse id="nav-collapse" is-nav>
 				  <!-- Right aligned nav items -->
 				  <b-navbar-nav class="ml-auto">
@@ -28,14 +27,10 @@
   </div>
 </template>
 <script>
+
     export default {
         computed : {
-            title() {
-                if(this.$store.state.event){
-                    return this.$store.state.event.title
-                }
-                return this.$router.currentRoute.name
-            }
+            
         }
     }
 </script>
