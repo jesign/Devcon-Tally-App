@@ -1,5 +1,13 @@
 <template>
     <b-form @submit.prevent="onSubmit" class="mt-2">
+        
+        <div class="utility-btn-group">
+            <b-button-group>
+                <b-button @click.prevent="$router.push('set-participants')" variant="outline-primary">Participants</b-button>
+                <b-button variant="outline-info">Criteria</b-button>
+            </b-button-group>
+        </div>
+        
         <b-form-group
             id="input-group-1"
             label="Event Name"
@@ -20,7 +28,10 @@
             ></b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" variant="info">Submit</b-button>
+        <b-button type="submit" variant="success">Submit</b-button>&nbsp;
+        <b-button @click.prevent="$router.push('events'); $store.commit('setEvent', {})" variant="light">Cancel</b-button>
+
+        <b-button @click.prevent="deleteEvent(form.id)" variant="outline-danger" class="float-right">Delete</b-button>
     </b-form>
 
 </template>
@@ -30,22 +41,31 @@
         name: 'event-form.vue',
         data: function(){
             return {
+                api : RestApiHandler.setService('/api/events'),
                 form: {}
             }
         },
         methods: {
             onSubmit(){
-                this.$router.push({
-                    name: 'Settings',
-                })
+                this.api.save(this.form).then(response => {
+                    this.$router.push('events')
+                });
+            },
+
+            deleteEvent(id) {
+                this.api.delete(id).then(response => {
+                    this.$router.push('events')
+                });
             }
         },
         mounted(){
-            this.form = this.$store.state.event
+            this.form = this.$store.getters.event
         }
     }
 </script>
 
 <style scoped>
-
+    .utility-btn-group {
+        margin-bottom: 20px;
+    }
 </style>
