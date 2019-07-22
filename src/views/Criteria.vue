@@ -3,7 +3,7 @@
     <b-row>
         <b-col>
             <b-modal :visible="showCriteriaForm" @hide="showCriteriaForm = false" hide-footer hide-header-close>
-                <b-form @submit.prevent="saveCriteria">
+                <b-form @submit.prevent="saveCriterion">
                     <b-form-group id="name" label="Name" label-for="input-2">
                         <b-form-input required v-model="criteriaForm.name" class="mt-2" placeholder="Name"></b-form-input>
                     </b-form-group>
@@ -18,7 +18,12 @@
                     <b-button @click="showCriteriaForm = false" class="float-right m-2" variant="light">Cancel</b-button>
                 </b-form>
             </b-modal>
-            <b-button @click="showCriteriaForm = true; criteriaForm = {}" variant="info" size="sm" class="my-2 float-right">Add Criteria</b-button>
+            <b-row>
+                <b-col>
+                    <b-button @click="criteriaForm = {}; $router.push('event')" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
+                    <b-button @click="showCriteriaForm = true; criteriaForm = {}" variant="info" size="sm" class="my-2 float-right">Add Criteria</b-button>
+                </b-col>
+            </b-row>
         </b-col>
     </b-row>
     <b-row>
@@ -29,7 +34,7 @@
                 class="mt-2"
             >
                 <b-card-body>
-                    <a @click.prevent="chooseEvent(item)">
+                    <a @click.prevent="showCriteriaForm = true; criteriaForm = item">
                         <h5>{{ item.name }}</h5>
                     </a>
                     <b-row>
@@ -37,8 +42,8 @@
                             <div>Max points: {{item.max_points}}</div>
                             <div>Percentage: {{item.percentage}}%</div>
                             <div class="mt-2">
-                                <b-button @click="showCriteriaForm = true; criteriaForm=item" size="sm" variant="info">Edit</b-button>
-                                <b-button @click="" class="ml-2" size="sm" variant="danger">Delete</b-button>
+                                <b-button @click="showCriteriaForm = true; criteriaForm = item" size="sm" variant="info">Edit</b-button>
+                                <b-button @click="deleteCriterion(item.id)" class="ml-2" size="sm" variant="danger">Delete</b-button>
                             </div>
                         </b-col>
                     </b-row>
@@ -55,11 +60,7 @@
         name: 'criteria',
         data: function () {
             return {
-                fields :[
-                    'name',
-                    { key: 'action', label: '' },
-                ],
-
+                api: RestApiHandler.setService('/api/events/'+this.$store.getters.event.id+'/criteria'),
                 showCriteriaForm: false,
                 criteriaForm: {},
                 criteria: [
@@ -70,9 +71,31 @@
                 ]
             }
         },
+        created() {
+            this.getCritera();
+        },
         methods: {
-            saveCriteria(){
-                this.showCriteriaForm = false
+
+            getCritera(){
+                this.api.index().then(response => {
+                    console.log(response)
+                    this.criteria = response.data
+                });
+            },
+
+            saveCriterion(){
+                this.api.save(this.criteriaForm).then(response => {
+                    this.getCritera()
+                    this.criteriaForm = {};
+                    this.showCriteriaForm = false
+                });
+            },
+
+            deleteCriterion(id) {
+                this.api.delete(id).then(response => {
+                    this.getCritera();
+                    this.$router.push('set-criteria')
+                });
             }
         }
     }
