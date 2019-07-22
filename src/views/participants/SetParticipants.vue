@@ -9,12 +9,28 @@
                     <b-button @click="showParticipantForm = false" class="float-right m-2" variant="light">Cancel</b-button>
                 </b-form>
             </b-modal>
-            <b-button @click="showParticipantForm = true; participantForm = {}" variant="info" size="sm" class="my-2 float-right">Add Participant</b-button>
-            <b-table striped hover :items="participants" :fields="fields">
-                <template slot="action" slot-scope="data">
-                    <b-button @click="showParticipantForm = true; participantForm=data.item" variant="info" class="float-right" size="sm">Edit</b-button>
-                </template>
-            </b-table>
+            
+            <b-row>
+                <b-col>
+                    <b-button @click="$router.push('event')" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
+                    <b-button @click="showParticipantForm = true; participantForm = {}" variant="info" size="sm" class="my-2 float-right">Add Participant</b-button>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col>
+                    <h1 class="h3 mt-5">Participants</h1>
+                </b-col>
+            </b-row>
+
+            <b-row>
+                <b-col>
+                    <b-card v-for="participant in participants" :sub-title="participant.name">
+                        <b-button @click="showParticipantForm = true; participantForm = participant" variant="info" size="sm" class="mr-3">Edit</b-button>
+                        <b-button @click="deleteParticipant(participant.id)" variant="danger" size="sm">Delete</b-button>
+                    </b-card>
+                </b-col>
+            </b-row>
+
         </b-col>
     </b-row>
 </template>
@@ -24,24 +40,35 @@
         name: 'participants',
         data: function () {
             return {
-                fields :[
-                    'name',
-                    { key: 'action', label: '' },
-                ],
-
+                api: RestApiHandler.setService('/api/events/'+this.$store.getters.event.id+'/participants'),
                 showParticipantForm: false,
                 participantForm: {},
-                participants: [
-                    {id: 1, name: 'Team 1'},
-                    {id: 2, name: 'Team 2'},
-                    {id: 3, name: 'Team 3'},
-                    {id: 4, name: 'Team 4'},
-                ]
+                participants: []
             }
+        },
+        created() {
+            this.getParticipants();
         },
         methods: {
             saveParticipant(){
-                this.showParticipantForm = false
+                this.api.save(this.participantForm).then(response => {
+                    this.getParticipants()
+                    this.showParticipantForm = false;
+                    this.participantForm = {}
+                });
+            },
+
+            getParticipants(){
+                this.api.index().then(response => {
+                    this.participants = response.data
+                });
+            },
+
+            deleteParticipant(id) {
+                this.api.delete(id).then(response => {
+                    this.$router.push('set-participants')
+                    this.getParticipants();
+                });
             }
         }
     }
