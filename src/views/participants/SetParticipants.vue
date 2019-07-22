@@ -2,10 +2,10 @@
     <b-row>
         <b-col>
             <b-modal :visible="showParticipantForm" @hide="showParticipantForm = false" hide-footer hide-header-close>
-                <b-form>
+                <b-form @submit.prevent="saveParticipant">
                     <b-form-input v-model="participantForm.name" placeholder="Name"></b-form-input>
 
-                    <b-button @click="saveParticipant" class="float-right mt-2" variant="info">Save</b-button>
+                    <b-button type="submit" class="float-right mt-2" variant="info">Save</b-button>
                     <b-button @click="showParticipantForm = false" class="float-right m-2" variant="light">Cancel</b-button>
                 </b-form>
             </b-modal>

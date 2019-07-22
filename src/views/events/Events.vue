@@ -14,23 +14,30 @@
             </b-modal>
             <b-row class="mt-2">
                 <b-col>
-                    <b-button class="float-right" variant="success" @click="showForm = true">Create Event</b-button>
+                    <b-button class="float-right" variant="info" @click="showForm = true" squared><i class="fas fa-plus"></i>Create Event</b-button>
                 </b-col>
             </b-row>
-            <b-card
-                v-for="event in events"
-                no-body
-                class="mt-2"
-            >
-                <b-card-body>
-                    <h4>
-                        <a @click.prevent="chooseEvent(event)">{{ event.title }}</a>
-                    </h4>
-                    <b-card-text>
-                        <p class="card-text">{{ event.description }}</p>
-                    </b-card-text>
-                </b-card-body>
-            </b-card>
+
+            <b-row>
+                <b-col>
+                    <h1 class="h3 mt-3 mb-3">Events</h1>
+                    <b-card
+                        v-for="event in events"
+                        no-body
+                        class="mt-2"
+                        @click.prevent="chooseEvent(event)"
+                    >
+                        <b-card-body>
+                            <h4>
+                                <a v-text="event.title"></a>
+                            </h4>
+                            <b-card-text>
+                                <p class="card-text">{{ event.description }}</p>
+                            </b-card-text>
+                        </b-card-body>
+                    </b-card>
+                </b-col>
+            </b-row>
         </b-col>
     </b-row>
 </template>

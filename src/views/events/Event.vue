@@ -1,10 +1,10 @@
 <template>
     <b-form @submit.prevent="onSubmit" class="mt-2">
         
-        <div class="utility-btn-group">
+        <div class="mb-5">
             <b-button-group>
-                <b-button @click.prevent="$router.push('set-participants')" variant="outline-primary" size="sm">Participants</b-button>
-                <b-button variant="outline-info" size="sm">Criteria</b-button>
+                <b-button @click.prevent="$router.push('set-participants')" variant="outline-primary" size="sm">View Participants</b-button>
+                <b-button @click.prevent="$router.push('set-criteria')" variant="outline-info" size="sm">View Criteria</b-button>
             </b-button-group>
         </div>
         
@@ -28,7 +28,7 @@
             ></b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" variant="success">Submit</b-button>&nbsp;
+        <b-button type="submit" variant="success" class="mr-1">Submit</b-button>
         <b-button @click.prevent="$router.push('events'); $store.commit('setEvent', {})" variant="light">Cancel</b-button>
 
         <b-button @click.prevent="deleteEvent(form.id)" variant="outline-danger" class="float-right">Delete</b-button>
@@ -65,7 +65,5 @@
 </script>
 
 <style scoped>
-    .utility-btn-group {
-        margin-bottom: 20px;
-    }
+
 </style>
