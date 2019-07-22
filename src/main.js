@@ -14,6 +14,9 @@ import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
 
+import RestApiHandler from './helpers/RestApiHandler.js'
+window.RestApiHandler = new RestApiHandler()
+
 new Vue({
   router,
   store,

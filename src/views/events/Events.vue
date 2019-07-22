@@ -23,9 +23,9 @@
                 class="mt-2"
             >
                 <b-card-body>
-                    <a @click.prevent="chooseEvent(event)">
-                        <h4>{{ event.title }}</h4>
-                    </a>
+                    <h4>
+                        <a @click.prevent="chooseEvent(event)">{{ event.title }}</a>
+                    </h4>
                     <b-card-text>
                         <p class="card-text">{{ event.description }}</p>
                     </b-card-text>
@@ -36,14 +36,13 @@
 </template>
 
 <script>
-    import RouteApiService from '../../services/RestApiService'
     import axios from 'axios'
 
     export default {
         name: 'events.vue',
         data: function(){
             return {
-                api : null,
+                api : RestApiHandler.setService('/api/events'),
                 showForm: false,
                 form: {},
                 events: []
@@ -52,7 +51,7 @@
         methods: {
             chooseEvent(event){
                 this.$store.commit('setEvent', event)
-                this.$router.push('event');gst
+                this.$router.push('event');
             },
 
             getEvents(){
@@ -63,20 +62,14 @@
             },
 
             saveEvent(){
-                // console.log(this.api)
                 this.api.save(this.form).then(response => {
                     this.getEvents()
-                })
-
-                // axios.post(process.env.VUE_APP_API_URL + '/api/events', {
-                //     title: 'asf'
-                // }).then(response => {
-                //     console.log(response)
-                // })
-            }
+                    this.showForm = false;
+                    this.form = {};
+                });
+            },
         },
         created(){
-            this.api = new RouteApiService('/api/events')
             this.getEvents()
         }
     }
