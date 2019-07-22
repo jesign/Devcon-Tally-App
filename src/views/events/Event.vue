@@ -3,8 +3,8 @@
         
         <div class="utility-btn-group">
             <b-button-group>
-                <b-button @click.prevent="$router.push('set-participants')" variant="outline-primary">Participants</b-button>
-                <b-button variant="outline-info">Criteria</b-button>
+                <b-button @click.prevent="$router.push('set-participants')" variant="outline-primary" size="sm">Participants</b-button>
+                <b-button variant="outline-info" size="sm">Criteria</b-button>
             </b-button-group>
         </div>
         
