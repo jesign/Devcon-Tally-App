@@ -72,8 +72,23 @@
             },
 
             deleteEvent(id) {
-                this.api.delete(id).then(response => {
-                    this.$router.push('events')
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this record",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.api.delete(id).then(response => {
+                            swal("Event has been deleted!", {
+                                icon: "success",
+                            });
+                            this.$router.push('events')
+                        });
+                        
+                    } 
                 });
             }
         },

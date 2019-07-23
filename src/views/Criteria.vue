@@ -92,9 +92,23 @@
             },
 
             deleteCriterion(id) {
-                this.api.delete(id).then(response => {
-                    this.getCritera();
-                    this.$router.push('set-criteria')
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this record",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.api.delete(id).then(response => {
+                            swal("Criterion has been deleted!", {
+                                icon: "success",
+                            });
+                            this.$router.push('set-criteria')
+                            this.getCritera();
+                        });
+                    } 
                 });
             }
         }

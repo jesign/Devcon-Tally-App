@@ -19,6 +19,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(faChevronLeft)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+import swal from 'sweetalert';
+
 import RestApiHandler from './helpers/RestApiHandler.js'
 window.RestApiHandler = new RestApiHandler()
 
