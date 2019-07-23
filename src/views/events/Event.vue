@@ -3,8 +3,18 @@
         
         <div class="mb-5">
             <b-button-group>
-                <b-button @click.prevent="$router.push('set-participants')" variant="outline-primary" size="sm">View Participants</b-button>
-                <b-button @click.prevent="$router.push('set-criteria')" variant="outline-info" size="sm">View Criteria</b-button>
+                <b-button 
+                    @click.prevent="$router.push('set-participants')" 
+                    variant="outline-primary" 
+                    size="sm">
+                    View Participants
+                </b-button>
+                <b-button 
+                    @click.prevent="$router.push('set-criteria')" 
+                    variant="outline-info" 
+                    size="sm">
+                    View Criteria
+                </b-button>
             </b-button-group>
         </div>
         
@@ -28,10 +38,19 @@
             ></b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" variant="success" class="mr-1">Submit</b-button>
-        <b-button @click.prevent="$router.push('events'); $store.commit('setEvent', {})" variant="light">Cancel</b-button>
+        <b-button 
+            type="submit" 
+            variant="success" 
+            class="mr-1 float-right">
+            Submit
+        </b-button>
 
-        <b-button @click.prevent="deleteEvent(form.id)" variant="outline-danger" class="float-right">Delete</b-button>
+        <b-button 
+            @click.prevent="deleteEvent(form.id)" 
+            variant="outline-danger"
+            size="sm">
+            Delete
+        </b-button>
     </b-form>
 
 </template>
@@ -59,7 +78,8 @@
             }
         },
         mounted(){
-            this.form = this.$store.getters.event
+            this.form = this.$store.getters.event;
+            this.$store.commit('setBackUrl', '/events');
         }
     }
 </script>

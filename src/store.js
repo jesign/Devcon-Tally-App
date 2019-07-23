@@ -7,16 +7,21 @@ let cacheEvent = localStorage.event || '{}';
 
 export default new Vuex.Store({
 	state: {
-		event: JSON.parse(cacheEvent)
+		event: JSON.parse(cacheEvent),
+		backUrl: ''
 	},
 	mutations: {
 		setEvent(state, event){
 			state.event = event;
 			localStorage.event = JSON.stringify(event);
+		},
+		setBackUrl(state, backUrl){
+			state.backUrl = backUrl;
 		}
 	},
 	actions: {},
 	getters: {
-		event: state => state.event
+		event: state => state.event,
+		backUrl: state => state.backUrl
 	}
 });
