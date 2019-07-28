@@ -63,12 +63,7 @@
                 api: RestApiHandler.setService('/api/events/'+this.$store.getters.event.id+'/criteria'),
                 showCriteriaForm: false,
                 criteriaForm: {},
-                criteria: [
-                    {id: 1, name: 'Relevance', percentage: 30, max_points: 10},
-                    {id: 1, name: 'Effectiveness', percentage: 40, max_points: 15},
-                    {id: 1, name: 'Efficiency', percentage: 20, max_points: 15},
-                    {id: 1, name: 'Impact', percentage: 10, max_points: 20},
-                ]
+                criteria: []
             }
         },
         created() {
