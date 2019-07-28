@@ -3,7 +3,7 @@
         <b-col>
             <b-table striped hover :items="participants" :fields="fields">
                 <template slot="action" slot-scope="data">
-                    <b-button @click="tally(data.item.id)" variant="info" class="float-right" size="sm">Tally</b-button>
+                    <b-button @click="tally(data.item.id); $store.commit('setParticipantId', data.item.id)" variant="info" class="float-right" size="sm">Tally</b-button>
                 </template>
             </b-table>
         </b-col>
@@ -15,23 +15,27 @@
         name: 'participants',
         data: function () {
             return {
-                fields :[
+                api: RestApiHandler.setService('/api/events/'+this.$store.getters.event.id+'/participants'),
+                fields: [
                     'name',
                     { key: 'action', label: '' }
 
                 ],
-                participants: [
-                    {id: 1, name: 'Team 1'},
-                    {id: 2, name: 'Team 2'},
-                    {id: 3, name: 'Team 3'},
-                    {id: 4, name: 'Team 4'},
-                ]
+                participants: []
             }
         },
         methods: {
             tally(id){
                 this.$router.push('/participants/' + id + '/tally')
+            },
+            getParticipants() {
+                this.api.index().then(response => {
+                    this.participants = response.data
+                });
             }
+        },
+        created() {
+            this.getParticipants();
         }
     }
 </script>

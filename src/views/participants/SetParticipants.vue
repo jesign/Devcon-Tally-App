@@ -12,7 +12,7 @@
             
             <b-row>
                 <b-col>
-                    <b-button @click="$router.push('event')" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
+                    <b-button @click="$router.push('event');" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
                     <b-button @click="showParticipantForm = true; participantForm = {}" variant="info" size="sm" class="my-2 float-right">Add Participant</b-button>
                 </b-col>
             </b-row>
