@@ -13,14 +13,14 @@ import Settings from './views/Settings'
 
 Vue.use(Router);
 
-export default new Router({
+const $router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
     routes: [
         {
             path: "/",
             name: "Home ",
-            component: Home
+            component: Home,
         },
         {
             path: "/login",
@@ -30,37 +30,37 @@ export default new Router({
         {
             path: "/about",
             name: "About",
-            component: About
+            component: About,
         },
         {
             path: "/events",
             name: "Events",
-            component: Events
+            component: Events,
         },
         {
             path: "/event",
             name: "Event",
-            component: Event
+            component: Event,
         },
         {
             path: "/set-participants",
             name: "Set Participants",
-            component: SetParticipants
+            component: SetParticipants,
         },
         {
             path: "/participants",
             name: "Participants",
-            component: Participant
+            component: Participant,
         },
         {
             path: "/participants/:id/tally",
             name: "Tally",
-            component: Tally
+            component: Tally,
         },
         {
             path: "/set-criteria",
             name: "Set Criteria",
-            component: SetCriteria
+            component: SetCriteria,
         },
         {
             path: "/settings",
@@ -69,3 +69,12 @@ export default new Router({
         }
     ]
 });
+
+$router.beforeEach((to, from, next) => {
+    if (to.fullPath != '/login' && !localStorage.loginToken)
+        next('/login')
+    else 
+        next();
+})
+
+export default $router;

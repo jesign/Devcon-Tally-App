@@ -27,6 +27,9 @@
 					<li class="nav-item">
 						<router-link to="/settings" class="nav-link">Settings</router-link>
 					</li>
+					<li class="nav-item">
+						<a href="#" @click.prevent="logout" class="nav-link">Logout</a>
+					</li>
 				</b-navbar-nav>
 			</b-collapse>
 		</b-navbar>
@@ -44,9 +47,6 @@
 <script>
 
     export default {
-        computed : {
-            
-        },
         methods: {
         	back() {
         		if (!this.$store.getters.backUrl) return;
@@ -54,6 +54,24 @@
 				this.$router.push(this.$store.getters.backUrl); 
 				this.$store.commit('setBackUrl', '')
 				this.$store.commit('setEvent', {})
+        	},
+        	logout() {
+        		swal({
+					title: "Are you sure?",
+					icon: "warning",
+					buttons: true,
+					dangerMode: true,
+				})
+				.then((willDelete) => {
+					if (willDelete) {
+						swal("Logged out successful", {
+							icon: "success",
+						});
+
+			    		localStorage.loginToken = '';
+			    		this.$router.push('/login')
+					}
+				});
         	}
         }
     }
