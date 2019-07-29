@@ -3,7 +3,7 @@
         <b-col>
             <b-table striped hover :items="participants" :fields="fields">
                 <template slot="action" slot-scope="data">
-                    <b-button @click="tally(data.item.id); $store.commit('setParticipantId', data.item.id)" variant="info" class="float-right" size="sm">Tally</b-button>
+                    <b-button @click="tally(data.item.id);" variant="info" class="float-right" size="sm">Tally</b-button>
                 </template>
             </b-table>
         </b-col>

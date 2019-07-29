@@ -64,10 +64,6 @@
 				})
 				.then((willDelete) => {
 					if (willDelete) {
-						swal("Logged out successful", {
-							icon: "success",
-						});
-
 			    		localStorage.loginToken = '';
 			    		this.$router.push('/login')
 					}
