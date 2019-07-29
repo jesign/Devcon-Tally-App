@@ -65,9 +65,14 @@
                     })
                 });
 
-                this.api.tally.save(tallyForm);
-
-                this.$router.push('/participants');
+                this.api.tally.save(tallyForm).then(response => {
+                    this.$router.push('/participants');
+                }).catch(error => {
+                    swal({
+                        icon: 'warning',
+                        text: 'Failed to save score'
+                    });
+                });
             },
         },
     }

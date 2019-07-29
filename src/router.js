@@ -56,6 +56,14 @@ const $router = new Router({
             path: "/participants/:id/tally",
             name: "Tally",
             component: Tally,
+            beforeRouteEnter (to, from, next) {
+                console.log(localStorage.event);
+                // if (JSON.parse(localStorage.event)) {
+                //     next('/events');
+                // } else {
+                //     next();
+                // }
+            }
         },
         {
             path: "/set-criteria",
@@ -71,10 +79,18 @@ const $router = new Router({
 });
 
 $router.beforeEach((to, from, next) => {
-    if (to.fullPath != '/login' && !localStorage.loginToken)
+    if (to.fullPath != '/login' && !localStorage.loginToken) {
         next('/login')
-    else 
-        next();
+        return;
+    }
+    
+    // console.log(to, localStorage);
+    if (to.fullPath == '/participants' && localStorage.event == '{}') {
+        next('/events');
+        return;
+    }
+
+    next();
 })
 
 export default $router;
