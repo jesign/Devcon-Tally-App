@@ -27,7 +27,7 @@
 					<li class="nav-item">
 						<router-link to="/settings" class="nav-link">Settings</router-link>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" v-if="$store.getters.isLoggedIn">
 						<a href="#" @click.prevent="logout" class="nav-link">Logout</a>
 					</li>
 				</b-navbar-nav>
@@ -62,13 +62,14 @@
 					buttons: true,
 					dangerMode: true,
 				})
-				.then((willDelete) => {
-					if (willDelete) {
+				.then((confirm) => {
+					if (confirm) {
 			    		localStorage.loginToken = '';
 			    		this.$router.push('/login')
+			    		this.$store.commit('updateLoggedInStatus', false);
 					}
 				});
-        	}
+        	},
         }
     }
 </script>

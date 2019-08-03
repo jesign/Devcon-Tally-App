@@ -54,6 +54,7 @@
 
 				axios.post(process.env.VUE_APP_API_URL + '/api/login', this.form).then(response => {
 					localStorage.loginToken = response.data.token;
+					this.$store.commit('updateLoggedInStatus', true);
 					this.$router.push('events');
 				}).catch(response => {
 					swal({
