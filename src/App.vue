@@ -87,10 +87,14 @@
 						
 					this.$store.commit('updateLoggedInStatus', false);
 					this.$store.commit('setEvent', {});
-					this.$store.commit('SetUser', {});
-					this.$router.push('/login')
+					this.$store.commit('setUser', {});
 
 					localStorage.loginToken = '';
+					localStorage.userRoles = '';
+
+					// reload to refresh data
+					location.href = '/login'
+
 				});
         	},
         }

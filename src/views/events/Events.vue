@@ -1,7 +1,7 @@
 <template>
     <b-row>
         <b-col>
-            <b-modal :visible="showForm" hide-footer @hide="showForm = false; form = {}" title="Create event">
+            <b-modal :visible="showForm" hide-footer @hide="showForm = false; form = {}" title="Create event" v-if="isAdmin">
                 <b-form @submit.prevent="saveEvent()">
                     <b-form-group label="Title">
                         <b-input v-model="form.title"></b-input>
@@ -12,7 +12,7 @@
                     <b-button block variant="success" type="submit">Save</b-button>
                 </b-form>
             </b-modal>
-            <b-row class="mt-2">
+            <b-row class="mt-2" v-if="isAdmin">
                 <b-col>
                     <b-button class="float-right" variant="info" @click="showForm = true" squared><i class="fas fa-plus"></i>Create Event</b-button>
                 </b-col>
@@ -44,6 +44,7 @@
 
 <script>
     import axios from 'axios'
+    import AuthService from '../../services/AuthService'
 
     export default {
         name: 'events.vue',
@@ -52,13 +53,16 @@
                 api : RestApiHandler.setService('/api/events'),
                 showForm: false,
                 form: {},
-                events: []
+                events: [],
+                isAdmin: AuthService.isAdmin()
             }
         },
         methods: {
             chooseEvent(event){
                 this.$store.commit('setEvent', event)
-                this.$router.push('event');
+                this.$router.push({
+                    name: 'Event'
+                });
             },
 
             getEvents(){

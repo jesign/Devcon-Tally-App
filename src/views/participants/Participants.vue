@@ -38,10 +38,11 @@
         },
         created() {
             if (_isEmpty(this.$store.getters.event)) {
-               this.$router.push('/events') 
+                this.$router.push('/events') 
+            } else {
+                this.getParticipants();
             }
 
-            this.getParticipants();
         }
     }
 </script>

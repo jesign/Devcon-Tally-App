@@ -95,11 +95,11 @@
         },
         mounted(){
             this.form = this.$store.getters.event;
-
+    
             if (_isEmpty(this.form)) {
                this.$router.push('/events') 
             }
-            
+
             this.$store.commit('setBackUrl', '/events');
         }
     }

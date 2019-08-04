@@ -1,17 +1,15 @@
 import Vue from "vue";
 import Router from "vue-router";
-import _concat from 'lodash/concat'
-import _find from 'lodash/find'
-
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import About from './views/About';
+import AdminRoutes from "./routes/admin_routes";
 
-import AdminRoutes from './routes/admin_routes'
-
-import store from './store';
+import  _concat  from 'lodash/concat';
+import AuthService from './services/AuthService';
 
 Vue.use(Router);
+
 let routes = [
     {
         path: "/",
@@ -27,17 +25,15 @@ let routes = [
         path: "/about",
         name: "About",
         component: About,
-    }
+    },
 ]
 
-// concat routes
 routes = _concat(routes, AdminRoutes)
 
-console.log(routes)
 const $router = new Router({
     mode: "history",
     base: process.env.BASE_URL,
-    routes
+    routes: routes 
 });
 
 $router.beforeEach((to, from, next) => {
@@ -47,12 +43,15 @@ $router.beforeEach((to, from, next) => {
     }
 
     if (to.meta.requireRole) {
-       if (!store.getters.user.roles.includes(to.meta.role)) {
-          next('/') 
-       }
+        AuthService.validateRoute(to, isAuthorized => {
+            next(isAuthorized)
+        })    
+    } else {
+        next()
     }
+   
     
-    next();
+    // next();
 })
 
 export default $router;

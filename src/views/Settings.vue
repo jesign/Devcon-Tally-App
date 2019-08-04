@@ -8,7 +8,11 @@
 
 <script>
     export default {
-        name: 'settings.vue'
+        name: 'settings.vue',
+
+        created() {
+            console.log('settings loaded')
+        }
     }
 </script>
 
