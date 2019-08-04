@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="max-width:678px; margin:0 auto;">
 	<div>
 		<b-navbar toggleable="lg" type="dark" variant="info">
 			<b-navbar-brand @click.prevent="back">
@@ -9,12 +9,12 @@
 					@click.prevent="back" 
 					class="mr-2" 
 				/> 
-				{{ $store.getters.event.title }}
+				{{ title }}
 			</b-navbar-brand>
 			<b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 			<b-collapse id="nav-collapse" is-nav>
 				<!-- Right aligned nav items -->
-				<b-navbar-nav class="ml-auto">
+				<b-navbar-nav class="ml-auto" v-if="$store.getters.isLoggedIn">
 					<li class="nav-item">
 						<router-link to="/" class="nav-link">Home</router-link>
 					</li>
@@ -27,7 +27,7 @@
 					<li class="nav-item">
 						<router-link to="/settings" class="nav-link">Settings</router-link>
 					</li>
-					<li class="nav-item" v-if="$store.getters.isLoggedIn">
+					<li class="nav-item">
 						<a href="#" @click.prevent="logout" class="nav-link">Logout</a>
 					</li>
 				</b-navbar-nav>
@@ -45,8 +45,21 @@
 	</div>
 </template>
 <script>
+	import _isEmpty from 'lodash/isEmpty'
+	import axios from 'axios'
 
     export default {
+
+		computed: {
+			title () {
+				if (_isEmpty(this.$store.getters.event)) {
+					return 'Devcon Tally App'
+				}
+
+				return this.$store.getters.event.title	
+			}
+		},
+
         methods: {
         	back() {
         		if (!this.$store.getters.backUrl) return;
@@ -56,18 +69,28 @@
 				this.$store.commit('setEvent', {})
         	},
         	logout() {
-        		swal({
-					title: "Are you sure?",
-					icon: "warning",
-					buttons: true,
-					dangerMode: true,
-				})
-				.then((confirm) => {
-					if (confirm) {
-			    		localStorage.loginToken = '';
-			    		this.$router.push('/login')
-			    		this.$store.commit('updateLoggedInStatus', false);
-					}
+        		// swal({
+				// 	title: "Are you sure?",
+				// 	icon: "warning",
+				// 	buttons: true,
+				// 	dangerMode: true,
+				// })
+				// .then((confirm) => {
+				// 	if (confirm) {
+					// 		this.$router.push('/login')
+			    // 		this.$store.commit('updateLoggedInStatus', false);
+				// 	}
+				// });
+
+				axios.post(process.env.VUE_APP_API_URL + '/api/logout')
+					.then(response => {
+						
+					this.$store.commit('updateLoggedInStatus', false);
+					this.$store.commit('setEvent', {});
+					this.$store.commit('SetUser', {});
+					this.$router.push('/login')
+
+					localStorage.loginToken = '';
 				});
         	},
         }

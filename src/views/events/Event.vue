@@ -4,8 +4,7 @@
         <div class="mb-5">
             <b-button-group>
                 <b-button 
-                    @click.prevent="$router.push('set-participants')" 
-                    variant="outline-primary" 
+                    @click.prevent="$router.push('set-participants')" variant="outline-primary" 
                     size="sm">
                     View Participants
                 </b-button>
@@ -56,6 +55,8 @@
 </template>
 
 <script>
+    import _isEmpty from 'lodash/isEmpty'
+
     export default {
         name: 'event-form.vue',
         data: function(){
@@ -94,6 +95,11 @@
         },
         mounted(){
             this.form = this.$store.getters.event;
+
+            if (_isEmpty(this.form)) {
+               this.$router.push('/events') 
+            }
+            
             this.$store.commit('setBackUrl', '/events');
         }
     }

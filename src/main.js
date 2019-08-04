@@ -16,16 +16,22 @@ Vue.use(BootstrapVue)
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 library.add(faChevronLeft)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-import swal from 'sweetalert';
 
 import RestApiHandler from './helpers/RestApiHandler.js'
 window.RestApiHandler = new RestApiHandler()
 
+import AuthService from "./services/AuthService.js";
+
 new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+
+  created() {
+    AuthService.init()
+  }
 }).$mount("#app");

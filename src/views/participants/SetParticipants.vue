@@ -36,6 +36,8 @@
 </template>
 
 <script>
+    import _isEmpty from 'lodash/isEmpty'
+
     export default {
         name: 'participants',
         data: function () {
@@ -47,7 +49,11 @@
             }
         },
         created() {
-            this.getParticipants();
+            if (_isEmpty(this.$store.getters.event)) {
+               this.$router.push('/events') 
+            } else {
+                this.getParticipants();
+            }
         },
         methods: {
             saveParticipant(){

@@ -78,6 +78,8 @@
         },
         created(){
             this.getEvents()
+
+            console.log('events')
         }
     }
 </script>

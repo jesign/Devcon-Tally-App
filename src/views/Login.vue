@@ -53,9 +53,13 @@
 				this.disableBtn = true;
 
 				axios.post(process.env.VUE_APP_API_URL + '/api/login', this.form).then(response => {
+
 					localStorage.loginToken = response.data.token;
+
 					this.$store.commit('updateLoggedInStatus', true);
-					this.$router.push('events');
+					this.$store.commit('setUser', response.data.user);
+					this.$router.push('/admin/events');
+
 				}).catch(response => {
 					swal({
 						icon: 'warning',

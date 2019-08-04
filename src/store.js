@@ -3,11 +3,12 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-let cacheEvent = localStorage.event || '{}';
+let cacheEvent = localStorage.event || {};
 
 export default new Vuex.Store({
 	state: {
 		event: JSON.parse(cacheEvent),
+		user: {},
 		backUrl: '',
 		isLoggedIn: false
 	},
@@ -15,6 +16,9 @@ export default new Vuex.Store({
 		setEvent(state, event){
 			state.event = event;
 			localStorage.event = JSON.stringify(event);
+		},
+		setUser(state, user){
+			state.user = user;
 		},
 		setBackUrl(state, backUrl){
 			state.backUrl = backUrl;
@@ -26,6 +30,7 @@ export default new Vuex.Store({
 	actions: {},
 	getters: {
 		event: state => state.event,
+		user: state => state.user,
 		backUrl: state => state.backUrl,
 		isLoggedIn: state => state.isLoggedIn,
 	}
