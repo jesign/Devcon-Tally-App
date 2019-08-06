@@ -3,7 +3,7 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-let cacheEvent = localStorage.event || {};
+let cacheEvent = localStorage.event || '{}';
 
 export default new Vuex.Store({
 	state: {

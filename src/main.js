@@ -26,6 +26,9 @@ window.RestApiHandler = new RestApiHandler()
 
 import AuthService from "./services/AuthService.js";
 
+import VueSwal from 'vue-swal';
+Vue.use(VueSwal);
+
 new Vue({
   router,
   store,
