@@ -48,7 +48,7 @@
             getScores() {
                 this.api.scores.index().then(response => {
                     response.data.scores.forEach(tally => {
-                        this.$set(this.scores, 'criteria_'+tally.criteria_id, tally.score);
+                        this.$set(this.scores, 'criteria_'+tally.criteria_id, tally.tally);
                     });
                 });
             },
@@ -66,7 +66,7 @@
                 });
 
                 this.api.tally.save(tallyForm).then(response => {
-                    this.$router.push('/participants');
+                    // this.getScores()
                 }).catch(error => {
                     swal({
                         icon: 'warning',
