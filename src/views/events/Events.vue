@@ -60,9 +60,9 @@
         methods: {
             chooseEvent(event){
                 this.$store.commit('setEvent', event)
-                this.$router.push({
-                    name: 'Event'
-                });
+
+                let routeName = (localStorage.userRoles == 'admin') ? "/event" : '/participants';
+                this.$router.push(routeName);
             },
 
             getEvents(){

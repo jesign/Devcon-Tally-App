@@ -6,13 +6,16 @@
                 <b-button 
                     @click.prevent="$router.push('set-participants')" variant="outline-primary" 
                     size="sm">
-                    View Participants
+                    Participants
                 </b-button>
                 <b-button 
                     @click.prevent="$router.push('set-criteria')" 
                     variant="outline-info" 
                     size="sm">
-                    View Criteria
+                    Criteria
+                </b-button>
+                <b-button @click.prevent="$router.push('set-judges')" variant="outline-primary" size="sm">
+                    Judges
                 </b-button>
             </b-button-group>
         </div>

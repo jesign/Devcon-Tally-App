@@ -24,8 +24,8 @@
 					<li class="nav-item">
 						<router-link to="/participants" class="nav-link">Tally</router-link>
 					</li>
-					<li class="nav-item">
-						<router-link to="/settings" class="nav-link">Settings</router-link>
+					<li class="nav-item" v-if="isAdmin">
+						<router-link to="/judges" class="nav-link">Judges</router-link>
 					</li>
 					<li class="nav-item">
 						<a href="#" @click.prevent="logout" class="nav-link">Logout</a>
@@ -45,11 +45,16 @@
 	</div>
 </template>
 <script>
+	import AuthService from './services/AuthService';
 	import _isEmpty from 'lodash/isEmpty'
 	import axios from 'axios'
 
     export default {
-
+    	data() {
+    		return {
+    			isAdmin: AuthService.isAdmin()
+    		}
+    	},
 		computed: {
 			title () {
 				if (_isEmpty(this.$store.getters.event)) {

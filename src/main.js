@@ -29,6 +29,9 @@ import AuthService from "./services/AuthService.js";
 import VueSwal from 'vue-swal';
 Vue.use(VueSwal);
 
+import _ from 'lodash';
+Vue.use(_);
+
 new Vue({
   router,
   store,

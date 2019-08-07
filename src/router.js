@@ -3,7 +3,12 @@ import Router from "vue-router";
 import Home from "./views/Home.vue";
 import Login from "./views/Login.vue";
 import About from './views/About';
+import Events from './views/events/Events';
+
 import AdminRoutes from "./routes/admin_routes";
+import Participant from './views/participants/Participants'
+import Tally from './views/Tally'
+import Event from './views/events/Event';
 
 import  _concat  from 'lodash/concat';
 import AuthService from './services/AuthService';
@@ -22,9 +27,27 @@ let routes = [
         component: Login
     },
     {
-        path: "/about",
-        name: "About",
-        component: About,
+        path: "/events",
+        name: "Events",
+        component: Events
+    },
+    {
+        path: "/event",
+        name: "Event",
+        component: Event,
+        
+    },
+    {
+        path: "/participants",
+        name: "Participants",
+        component: Participant,
+        
+    },
+    {
+        path: "/participants/:id/tally",
+        name: "Tally",
+        component: Tally,
+        
     },
 ]
 
@@ -49,9 +72,6 @@ $router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-   
-    
-    // next();
 })
 
 export default $router;
