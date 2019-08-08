@@ -52,7 +52,7 @@
     export default {
     	data() {
     		return {
-    			isAdmin: AuthService.isAdmin()
+    			
     		}
     	},
 		computed: {
@@ -62,6 +62,9 @@
 				}
 
 				return this.$store.getters.event.title	
+			},
+			isAdmin() {
+				return AuthService.isAdmin();
 			}
 		},
 
@@ -74,19 +77,6 @@
 				this.$store.commit('setEvent', {})
         	},
         	logout() {
-        		// swal({
-				// 	title: "Are you sure?",
-				// 	icon: "warning",
-				// 	buttons: true,
-				// 	dangerMode: true,
-				// })
-				// .then((confirm) => {
-				// 	if (confirm) {
-					// 		this.$router.push('/login')
-			    // 		this.$store.commit('updateLoggedInStatus', false);
-				// 	}
-				// });
-
 				axios.post(process.env.VUE_APP_API_URL + '/api/logout')
 					.then(response => {
 						

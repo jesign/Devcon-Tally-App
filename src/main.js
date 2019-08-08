@@ -32,6 +32,9 @@ Vue.use(VueSwal);
 import _ from 'lodash';
 Vue.use(_);
 
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
+
 new Vue({
   router,
   store,
