@@ -22,7 +22,7 @@
             </b-modal>
             <b-row>
                 <b-col>
-                    <b-button @click="setForm({}, true);" variant="info" size="sm" class="my-2 float-right">Add Judge</b-button>
+                    <b-button @click="setForm({}, true);" variant="info" size="sm" class="my-2 float-right"><font-awesome-icon icon="plus-circle"></font-awesome-icon> Add Judge</b-button>
                 </b-col>
             </b-row>
         </b-col>

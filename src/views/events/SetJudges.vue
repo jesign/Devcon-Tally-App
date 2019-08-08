@@ -1,16 +1,21 @@
 <template>
 	<b-row>
 		<b-col>
-			<b-form @submit.prevent="onSubmit" class="mt-2">
-		  		<b-button @click="showJudgeForm = true; judgeForm = {}" variant="info" size="sm" class="mb-2 float-right">Add New Judge</b-button>
+			<b-row>
+                <b-col>
+                    <b-button @click="$router.push('event')" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
+		  			<b-button @click="showJudgeForm = true; judgeForm = {}" variant="info" size="sm" class="mt-2 float-right"><font-awesome-icon icon="plus-circle"></font-awesome-icon> Add New Judge</b-button>
+                </b-col>
+            </b-row>
+
+			<b-form @submit.prevent="onSubmit" class="mt-4 mb-5">
 				<b-form-group id="input-group-3" label="Judges:" label-for="input-3">
 					<multiselect v-model="judgesSelected" :options="judges" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="id" :preselect-first="true" @remove="deleteEventJudge">
 					    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span>
 					    </template>
 			  		</multiselect>
 			  	</b-form-group>
-		  		<b-button @click.prevent="$router.push('/event')" size="sm">Back</b-button>
-		  		<b-button type="submit" variant="primary" size="sm" class="float-right">Save Judges</b-button>
+		  		<b-button type="submit" variant="success" size="xs" class="float-right">Save Judges</b-button>
 		  	</b-form>
 
 		  	<b-table striped hover :items="eventJudges" :fields="fields" class="mt-5"></b-table>
@@ -27,7 +32,7 @@
                         <b-form-input type="password" required v-model="judgeForm.password" class="mt-2"></b-form-input>
                     </b-form-group>
 
-                    <b-button type="submit" class="float-right mt-2" variant="info">Save</b-button>
+                    <b-button type="submit" class="float-right mt-2" variant="success">Save</b-button>
                     <b-button @click="showJudgeForm = false; judgeForm = {}" class="float-right m-2" variant="light">Cancel</b-button>
                 </b-form>
             </b-modal>

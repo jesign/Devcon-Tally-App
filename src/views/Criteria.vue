@@ -21,7 +21,9 @@
             <b-row>
                 <b-col>
                     <b-button @click="criteriaForm = {}; $router.push('event')" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
-                    <b-button @click="showCriteriaForm = true; criteriaForm = {}" variant="info" size="sm" class="my-2 float-right">Add Criteria</b-button>
+                    <b-button @click="showCriteriaForm = true; criteriaForm = {}" variant="info" size="sm" class="my-2 float-right">
+                        <font-awesome-icon icon="plus-circle"></font-awesome-icon> Add Criteria
+                    </b-button>
                 </b-col>
             </b-row>
         </b-col>

@@ -14,7 +14,7 @@
             </b-modal>
             <b-row class="mt-2" v-if="isAdmin">
                 <b-col>
-                    <b-button class="float-right" variant="info" @click="showForm = true" squared><i class="fas fa-plus"></i>Create Event</b-button>
+                    <b-button class="float-right" variant="info" @click="showForm = true" squared><font-awesome-icon icon="plus-circle"></font-awesome-icon> Create Event</b-button>
                 </b-col>
             </b-row>
 
