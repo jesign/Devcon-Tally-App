@@ -24,6 +24,9 @@
 					<li class="nav-item">
 						<router-link to="/participants" class="nav-link">Tally</router-link>
 					</li>
+                    <li class="nav-item">
+                        <router-link to="/leaderboard" class="nav-link">Leaderboard</router-link>
+                    </li>
 					<li class="nav-item" v-if="isAdmin">
 						<router-link to="/judges" class="nav-link">Judges</router-link>
 					</li>

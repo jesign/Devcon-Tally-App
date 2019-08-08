@@ -9,6 +9,7 @@ import AdminRoutes from "./routes/admin_routes";
 import Participant from './views/participants/Participants'
 import Tally from './views/Tally'
 import Event from './views/events/Event';
+import Leaderboard from './views/leaderboard/Leaderboard'
 
 import  _concat  from 'lodash/concat';
 import AuthService from './services/AuthService';
@@ -49,6 +50,11 @@ let routes = [
         component: Tally,
         
     },
+    {
+        path: '/leaderboard',
+        name: "Leaderboard",
+        component: Leaderboard
+    }
 ]
 
 routes = _concat(routes, AdminRoutes)
