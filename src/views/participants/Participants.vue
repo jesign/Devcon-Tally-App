@@ -30,6 +30,7 @@
                 participants: []
             }
         },
+
         methods: {
             tally(id){
                 this.$router.push('/participants/' + id + '/tally')

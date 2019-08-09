@@ -25,7 +25,7 @@
             <b-row>
                 <b-col>
                     <b-card v-for="participant in participants" :sub-title="participant.name" class="mt-1">
-                        <div><b-badge class="float-left" variant="success">Tally Completed</b-badge></div>
+                        <div><b-badge v-show="participant.scoreSummary.completed" class="float-left" variant="success">Tally Completed</b-badge></div>
                         <br>
                         <b-button @click="showParticipantForm = true; participantForm = participant" variant="info" size="sm" class="mr-1">Edit</b-button>
                         <b-button @click="deleteParticipant(participant.id)" variant="danger" size="sm">Delete</b-button>

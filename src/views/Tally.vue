@@ -1,16 +1,21 @@
 <template>
-    <b-form @submit.prevent="saveScore">
-        <b-table :fields="fields" :items="criteria">
-            <template slot="name" slot-scope="data">
-                {{data.item.name}} ({{data.item.percentage }}%)
-            </template>
-            <template slot="score" slot-scope="data">
-                <b-input type="number" v-model="scores['criteria_' + data.item.id]" class="d-inline w-50" :max="data.item.max_points"></b-input> / {{data.item.max_points}}
-            </template>
-        </b-table>
-        <b-button @click.prevent="$router.push('/participants');">Back</b-button>
-        <b-button type="submit" variant="info" class="float-right d-block">Save</b-button>
-    </b-form>
+    <b-row>
+        <b-col>
+            <b-button @click="$router.push('/participants');" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Participants</b-button>
+            <b-form @submit.prevent="saveScore">
+                <b-table :fields="fields" :items="criteria">
+                    <template slot="name" slot-scope="data">
+                        {{data.item.name}} ({{data.item.percentage }}%)
+                    </template>
+                    <template slot="score" slot-scope="data">
+                        <b-input type="number" v-model="scores['criteria_' + data.item.id]" class="d-inline w-50" :max="data.item.max_points"></b-input> / {{data.item.max_points}}
+                    </template>
+                </b-table>
+                <!--<b-button @click.prevent="$router.push('/participants');">Back</b-button>-->
+                <b-button type="submit" variant="info" block>Save</b-button>
+            </b-form>
+        </b-col>
+    </b-row>
 </template>
 
 <script>
@@ -24,7 +29,9 @@
                     scores: RestApiHandler.setService('/api/participants/'+this.$route.params.id+'/scores')
                 },
                 fields: {
-                    name,
+                    name : {
+                        label: 'Criteria'
+                    },
                     score: {
                         thStyle: {
                             width: '40%'

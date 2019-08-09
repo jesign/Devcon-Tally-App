@@ -55,7 +55,8 @@
                         datasets: [{
                             label: 'Overall Scores',
                             data: data,
-                            borderWidth: 1
+                            borderWidth: 1,
+                            backgroundColor: '#49a7aa55'
                         }]
                     }
                     console.log(this.chartdata)

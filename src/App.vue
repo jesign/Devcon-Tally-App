@@ -21,11 +21,14 @@
 					<li class="nav-item">
 						<router-link to="/events" class="nav-link">Events</router-link>
 					</li>
-					<li class="nav-item" v-if="!isAdmin">
+					<li class="nav-item" v-if="!isAdmin && $store.getters.event.id">
 						<router-link to="/participants" class="nav-link">Tally</router-link>
 					</li>
-                    <li class="nav-item" v-if="this.$store.getters.event.id">
+                    <li class="nav-item" v-if="$store.getters.event.id">
                         <router-link to="/leaderboard" class="nav-link">Leaderboard</router-link>
+                    </li>
+                    <li class="nav-item" v-if="isAdmin && $store.getters.event.id">
+                        <router-link to="/set-participants" class="nav-link">Participants</router-link>
                     </li>
 					<li class="nav-item" v-if="isAdmin">
 						<router-link to="/judges" class="nav-link">Judges</router-link>
