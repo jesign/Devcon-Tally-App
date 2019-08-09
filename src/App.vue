@@ -34,6 +34,9 @@
 						<router-link to="/judges" class="nav-link">Judges</router-link>
 					</li>
 					<li class="nav-item">
+						<router-link to="/reports" class="nav-link">Reports</router-link>
+					</li>
+					<li class="nav-item">
 						<a href="#" @click.prevent="logout" class="nav-link">Logout</a>
 					</li>
 				</b-navbar-nav>

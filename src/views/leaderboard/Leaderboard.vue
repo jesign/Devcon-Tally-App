@@ -1,12 +1,14 @@
 <template>
-    <b-row>
-        <b-col>
-            <h3 class="my-2">Leaderboard</h3>
-            <bar-chart v-if="loaded"
-                        :chartdata="chartdata"
-                        :options="options"></bar-chart>
-        </b-col>
-    </b-row>
+    <div>
+        <b-row>
+            <b-col>
+                <h3 class="my-2">Leaderboard</h3>
+                <bar-chart v-if="loaded"
+                            :chartdata="chartdata"
+                            :options="options"></bar-chart>
+            </b-col>
+        </b-row>
+    </div>
 </template>
 
 <script>
@@ -40,7 +42,6 @@
 
             ScoringService.getAllParticipantsScores(this.$store.getters.event.id)
                 .then(response => {
-                    console.log(response.data)
                     let labels = [];
                     let data = [];
 
@@ -61,8 +62,11 @@
                     }
                     console.log(this.chartdata)
                     this.loaded = true
-                })
-        }
+                });
+        },
+        methods: {
+            
+        },
     }
 </script>
 

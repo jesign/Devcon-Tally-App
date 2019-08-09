@@ -10,6 +10,7 @@ import Participant from './views/participants/Participants'
 import Tally from './views/Tally'
 import Event from './views/events/Event';
 import Leaderboard from './views/leaderboard/Leaderboard'
+import Reports from './views/Reports'
 
 import  _concat  from 'lodash/concat';
 import AuthService from './services/AuthService';
@@ -56,6 +57,11 @@ let routes = [
         path: '/leaderboard',
         name: "Leaderboard",
         component: Leaderboard
+    },
+    {
+        path: '/reports',
+        name: "Reports",
+        component: Reports
     }
 ]
 
