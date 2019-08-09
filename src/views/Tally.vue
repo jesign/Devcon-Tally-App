@@ -46,7 +46,7 @@
                 });
             },
             getScores() {
-                this.api.scores.index().then(response => {
+                this.api.tally.index().then(response => {
                     response.data.scores.forEach(tally => {
                         this.$set(this.scores, 'criteria_'+tally.criteria_id, tally.tally);
                     });
