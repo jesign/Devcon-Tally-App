@@ -13,6 +13,7 @@
     import BarChart from '../../charts/BarChart'
     import axios from 'axios'
     import _forEach from 'lodash/forEach'
+    import ScoringService from '../../services/ScoringService'
 
     export default {
         name: 'leaderboard',
@@ -24,21 +25,24 @@
                 scales: {
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
+                            beginAtZero: true,
+                            mirror: true
+                        },
+                        maxBarThickness	: 25,
+                    }],
+                },
+
+                responsive: true,
             }
         }),
         async mounted () {
             this.loaded = false
 
-            axios.get(process.env.VUE_APP_API_URL + '/api/events/' + this.$store.getters.event.id + '/participants-scores')
+            ScoringService.getAllParticipantsScores(this.$store.getters.event.id)
                 .then(response => {
                     console.log(response.data)
                     let labels = [];
                     let data = [];
-                    let backgroundColor = []
 
                     _forEach(response.data, (value) => {
                         console.log(value)
@@ -51,7 +55,6 @@
                         datasets: [{
                             label: 'Overall Scores',
                             data: data,
-                            backgroundColor: '#17a2b8',
                             borderWidth: 1
                         }]
                     }

@@ -18,14 +18,16 @@
             </b-row>
             <b-row>
                 <b-col>
-                    <h1 class="h3 mt-5">Participants</h1>
+                    <h1 class="h3 mt-2">Participants</h1>
                 </b-col>
             </b-row>
 
             <b-row>
                 <b-col>
-                    <b-card v-for="participant in participants" :sub-title="participant.name">
-                        <b-button @click="showParticipantForm = true; participantForm = participant" variant="info" size="sm" class="mr-3">Edit</b-button>
+                    <b-card v-for="participant in participants" :sub-title="participant.name" class="mt-1">
+                        <div><b-badge class="float-left" variant="success">Tally Completed</b-badge></div>
+                        <br>
+                        <b-button @click="showParticipantForm = true; participantForm = participant" variant="info" size="sm" class="mr-1">Edit</b-button>
                         <b-button @click="deleteParticipant(participant.id)" variant="danger" size="sm">Delete</b-button>
                     </b-card>
                 </b-col>
@@ -37,6 +39,7 @@
 
 <script>
     import _isEmpty from 'lodash/isEmpty'
+    import ScoringService from '../../services/ScoringService'
 
     export default {
         name: 'participants',
@@ -65,7 +68,7 @@
             },
 
             getParticipants(){
-                this.api.index().then(response => {
+                ScoringService.getAllParticipantsScores(this.$store.getters.event.id).then(response => {
                     this.participants = response.data
                 });
             },

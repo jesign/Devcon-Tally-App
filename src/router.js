@@ -14,6 +14,8 @@ import Leaderboard from './views/leaderboard/Leaderboard'
 import  _concat  from 'lodash/concat';
 import AuthService from './services/AuthService';
 
+import store from './store'
+
 Vue.use(Router);
 
 let routes = [
@@ -69,6 +71,10 @@ $router.beforeEach((to, from, next) => {
     if (to.fullPath != '/login' && !localStorage.loginToken) {
         next('/login')
         return;
+    }
+
+    if(to.name === 'Leaderboard' && ! store.getters.event.id){
+        next('/events')
     }
 
     if (to.meta.requireRole) {

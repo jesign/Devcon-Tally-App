@@ -2,6 +2,9 @@
     <b-row>
         <b-col>
             <b-table striped hover :items="participants" :fields="fields">
+                <template slot="name" slot-scope="data">
+                     {{data.item.name}} <font-awesome-icon v-show="data.item.scoreSummary.tallied" class="text-success" icon="check"></font-awesome-icon>
+                </template>
                 <template slot="action" slot-scope="data">
                     <b-button @click="tally(data.item.id);" variant="info" class="float-right" size="sm">Tally</b-button>
                 </template>
@@ -12,6 +15,7 @@
 
 <script>
     import _isEmpty from 'lodash/isEmpty'
+    import ScoringService from '../../services/ScoringService'
 
     export default {
         name: 'participants',
@@ -31,7 +35,8 @@
                 this.$router.push('/participants/' + id + '/tally')
             },
             getParticipants() {
-                this.api.index().then(response => {
+
+                ScoringService.getAllParticipantsScores(this.$store.getters.event.id).then(response => {
                     this.participants = response.data
                 });
             }

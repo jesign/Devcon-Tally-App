@@ -24,7 +24,7 @@
 					<li class="nav-item" v-if="!isAdmin">
 						<router-link to="/participants" class="nav-link">Tally</router-link>
 					</li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="this.$store.getters.event.id">
                         <router-link to="/leaderboard" class="nav-link">Leaderboard</router-link>
                     </li>
 					<li class="nav-item" v-if="isAdmin">

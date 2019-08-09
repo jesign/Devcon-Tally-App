@@ -4,12 +4,12 @@
 			<b-row>
                 <b-col>
                     <b-button @click="$router.push('event')" variant="outline-secondary" size="sm" class="my-2 float-left">< Back to Event</b-button>
-		  			<b-button @click="showJudgeForm = true; judgeForm = {}" variant="info" size="sm" class="mt-2 float-right"><font-awesome-icon icon="plus-circle"></font-awesome-icon> Add New Judge</b-button>
+		  			<!--<b-button @click="showJudgeForm = true; judgeForm = {}" variant="info" size="sm" class="mt-2 float-right"><font-awesome-icon icon="plus-circle"></font-awesome-icon> Add New Judge</b-button>-->
                 </b-col>
             </b-row>
 			<b-row>
 				<b-col>
-					<b-form @submit.prevent="onSubmit" class="mt-4 mb-5">
+					<b-form @submit.prevent="onSubmit" class="mt-2 mb-5">
 						<b-form-group id="input-group-3" label="Judges:" label-for="input-3">
 							<multiselect v-model="judgesSelected" :options="judges" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="id" :preselect-first="true" @remove="deleteEventJudge">
 							    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span>
@@ -22,7 +22,7 @@
 			  </b-row>
 			<b-row>
 				<b-col>
-					<b-table striped hover :items="eventJudges" :fields="fields" class="mt-5"></b-table>
+					<b-table striped hover :items="eventJudges" :fields="fields" class="mt-3"></b-table>
 				</b-col>
 			</b-row>
 			
