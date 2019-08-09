@@ -7,19 +7,25 @@
 		  			<b-button @click="showJudgeForm = true; judgeForm = {}" variant="info" size="sm" class="mt-2 float-right"><font-awesome-icon icon="plus-circle"></font-awesome-icon> Add New Judge</b-button>
                 </b-col>
             </b-row>
-
-			<b-form @submit.prevent="onSubmit" class="mt-4 mb-5">
-				<b-form-group id="input-group-3" label="Judges:" label-for="input-3">
-					<multiselect v-model="judgesSelected" :options="judges" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="id" :preselect-first="true" @remove="deleteEventJudge">
-					    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span>
-					    </template>
-			  		</multiselect>
-			  	</b-form-group>
-		  		<b-button type="submit" variant="success" size="xs" class="float-right">Save Judges</b-button>
-		  	</b-form>
-
-		  	<b-table striped hover :items="eventJudges" :fields="fields" class="mt-5"></b-table>
-
+			<b-row>
+				<b-col>
+					<b-form @submit.prevent="onSubmit" class="mt-4 mb-5">
+						<b-form-group id="input-group-3" label="Judges:" label-for="input-3">
+							<multiselect v-model="judgesSelected" :options="judges" :multiple="true" :close-on-select="false" :clear-on-select="false" :preserve-search="true" placeholder="Pick some" label="name" track-by="id" :preselect-first="true" @remove="deleteEventJudge">
+							    <template slot="selection" slot-scope="{ values, search, isOpen }"><span class="multiselect__single" v-if="values.length &amp;&amp; !isOpen">{{ values.length }} options selected</span>
+							    </template>
+					  		</multiselect>
+					  	</b-form-group>
+				  		<b-button type="submit" variant="success" size="xs" class="float-right">Save Judges</b-button>
+				  	</b-form>
+				  </b-col>
+			  </b-row>
+			<b-row>
+				<b-col>
+					<b-table striped hover :items="eventJudges" :fields="fields" class="mt-5"></b-table>
+				</b-col>
+			</b-row>
+			
 		  	<b-modal title="Add Judge" :visible="showJudgeForm" @hide="showJudgeForm = false" hide-footer hide-header-close>
                 <b-form @submit.prevent="saveJudge">
                     <b-form-group id="name" label="Name" label-for="input-2">
@@ -46,6 +52,7 @@
 			return {
 				api: {
 					judges: RestApiHandler.setService('/api/judges'),
+					eventJudges: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/judges'),
 					assignEventJudges: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/assign-judges'),
 					deleteEventJudges: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/remove-judge'),
 				},
@@ -64,10 +71,10 @@
                 });
             },
             getEventJudges() {
-            	this.eventJudges = [{"id":3,"name":"Ismael Jhon Jr Batan Jalbuna","email":"jalbuna.ismael@gmail.com1","email_verified_at":null,"created_at":"2019-08-07 11:35:12","updated_at":"2019-08-07 11:35:12","roles":"judge","desc":null},{"id":4,"name":"adsasdas","email":"dasdas@gmail.com","email_verified_at":null,"created_at":"2019-08-07 13:27:50","updated_at":"2019-08-07 13:27:50","roles":"judge","desc":null},{"id":5,"name":"sample","email":"sample@gmail.com","email_verified_at":null,"created_at":"2019-08-08 11:55:56","updated_at":"2019-08-08 11:55:56","roles":"judge","desc":null}];
-
-				// pre-selected
-				// this.judgesSelected.push({"id":3,"name":"Ismael Jhon Jr Batan Jalbuna","email":"jalbuna.ismael@gmail.com1","email_verified_at":null,"created_at":"2019-08-07 11:35:12","updated_at":"2019-08-07 11:35:12","roles":"judge","desc":null});
+				this.api.eventJudges.index().then(response => {
+					this.eventJudges = response.data
+					this.judgesSelected = response.data
+				});
             },
             onSubmit() {
             	let judgeIds = [];
@@ -78,11 +85,14 @@
 
             	this.api.assignEventJudges.save({ judge_ids: judgeIds }).then(response => {
                    	swal("Judges successfully added")
+                   	this.getEventJudges();
                 });
             },
             deleteEventJudge(judge) {
             	this.api.deleteEventJudges.save({ id: judge.id }).then(response => {
            			console.log("successfully removed");
+
+                	this.getEventJudges()
                 });
             },
             saveJudge(){
@@ -91,9 +101,6 @@
                     this.judgeForm = {};
                     this.showJudgeForm = false
                 });
-
-                this.judgeForm = {};
-                this.showJudgeForm = false
             },
 		},
 		created() {

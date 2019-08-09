@@ -67,6 +67,7 @@
 
                 this.api.tally.save(tallyForm).then(response => {
                     // this.getScores()
+                    this.$router.push('/participants');
                 }).catch(error => {
                     swal({
                         icon: 'warning',

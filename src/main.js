@@ -14,10 +14,10 @@ import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faChevronLeft, faPlusCircle, faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft, faPlusCircle, faCheck, faCog } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faChevronLeft, faPlusCircle, faCheck)
+library.add(faChevronLeft, faPlusCircle, faCheck, faCog)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 

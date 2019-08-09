@@ -21,7 +21,7 @@
 					<li class="nav-item">
 						<router-link to="/events" class="nav-link">Events</router-link>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" v-if="!isAdmin">
 						<router-link to="/participants" class="nav-link">Tally</router-link>
 					</li>
                     <li class="nav-item">
