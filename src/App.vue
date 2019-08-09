@@ -33,7 +33,7 @@
 					<li class="nav-item" v-if="isAdmin">
 						<router-link to="/judges" class="nav-link">Judges</router-link>
 					</li>
-					<li class="nav-item">
+					<li class="nav-item" v-if="$store.getters.event.id">
 						<router-link to="/reports" class="nav-link">Reports</router-link>
 					</li>
 					<li class="nav-item">

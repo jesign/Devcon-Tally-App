@@ -59,28 +59,24 @@
                 ]
             }
         },
-        async created () {
-            await this.getCriteria();
-            await this.getEventJudges();
-            await this.getParticipantsScores();
+        created () {
+            this.getParticipantsScores();
         },
         methods: {
             print() {
                 window.print()
             },
-            getCriteria(){
-                this.api.criteria.index().then(response => {
-                    this.criteria = response.data
-                });
-            },
-            getEventJudges() {
-                this.api.eventJudges.index().then(response => {
-                    this.eventJudges = response.data
-                });
-            },
             getParticipantsScores() {
-                this.api.participantsScores.index().then(response => {
+                this.api.participantsScores.index().then(async response => {
                     this.participantScores = response.data;
+
+                    await this.api.criteria.index().then(response => {
+                        this.criteria = response.data
+                    });
+
+                    await this.api.eventJudges.index().then(response => {
+                        this.eventJudges = response.data
+                    });
 
                     this.arrangeParticipantsScoreFields()
                 });
