@@ -2,6 +2,11 @@
     <div>
         <b-row>
             <b-col>
+                <pie-chart :chartData="chartData"></pie-chart>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
                 <h4 class="mt-2 float-left">Overall Scores</h4>
                 <b-button @click.prevent="print" variant="success" class="print float-right mt-2">Print All</b-button>
             </b-col>
@@ -41,15 +46,20 @@
 </template>
 
 <script>
+    import PieChart from '../charts/PieChart'
     import _forEach from 'lodash/forEach'
 
     export default {
         name: 'reports',
+        components: {
+            PieChart
+        },
         data: function() {
             return {
                 api: {
                     participantsScores: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/participants-scores'),
                     eventJudges: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/judges'),
+                    criteria: RestApiHandler.setService('/api/events/'+this.$store.getters.event.id+'/criteria'),
                 },
                 participantScores: [],
                 participantsDisplay: [],
@@ -67,15 +77,53 @@
                 fieldsTotalScores: [
                     { key: 'name', label: 'Participant Name' },
                     { key: 'totalScore', label: 'Total Score'},
-                ]
+                ],
+                loaded: false,
+                chartData: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "Criteria",
+                            backgroundColor: [],
+                            data: []
+                        }
+                    ]
+                }
             }
         },
         created () {
             this.getParticipantsScores();
+            this.getCriteria();
         },
         methods: {
             print() {
                 window.print()
+            },
+            getCriteria() {
+                this.api.criteria.index().then(response => {
+                    let criteria = response.data
+                    
+                    let labels = [];
+                    let backgroundColor = [];
+                    let data = [];
+
+                    _.forEach(response.data, (criterion) => {
+                        labels.push(criterion.name);
+                        backgroundColor.push('#'+(0x1000000+(Math.random())*0xffffff).toString(16).substr(1,6));
+                        data.push(criterion.percentage)
+                    });
+
+                    this.$set(this.chartData, {
+                        labels: labels,
+                        datasets: [{
+                            label: "Criteria",
+                            data: data,
+                            backgroundColor: backgroundColor
+                        }]
+                    })
+                    this.loaded = true;
+
+                });
             },
             getParticipantsScores() {
                 this.api.participantsScores.index().then(async response => {
@@ -113,8 +161,6 @@
 
                     this.participantsDisplay.push(fakeFields);
                 });
-
-                console.log(this.participantsDisplay)
             }
         },
     }
