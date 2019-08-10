@@ -13,9 +13,22 @@
         </b-row>
         <b-row>
             <b-col>
-                <div v-for="participant in participantsDisplay" class="mb-4">
+                <div v-for="participant in participantsDisplay" class="mb-4 d-none d-sm-block">
                     <h4>{{ participant.name }}</h4>
                     <b-table v-if="participant.scores.length > 0" class="mt-1" :fields="participantsScoreFields" :items="participant.scores">
+                        <template slot="tallySummary" slot-scope="data">
+                            <span v-html="data.value"></span>
+                        </template>
+                    </b-table>
+                    <b-alert show v-if="!participant.scores.length" variant="warning">No Scores yet</b-alert>
+                </div>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col>
+                <div v-for="participant in participantsDisplay" class="mb-4 d-block d-sm-none">
+                    <h4>{{ participant.name }}</h4>
+                    <b-table stacked v-if="participant.scores.length > 0" class="mt-1" :fields="participantsScoreFields" :items="participant.scores">
                         <template slot="tallySummary" slot-scope="data">
                             <span v-html="data.value"></span>
                         </template>
@@ -36,12 +49,10 @@
             return {
                 api: {
                     participantsScores: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/participants-scores'),
-                    criteria: RestApiHandler.setService('/api/events/'+this.$store.getters.event.id+'/criteria'),
                     eventJudges: RestApiHandler.setService('/api/events/' + this.$store.getters.event.id + '/judges'),
                 },
                 participantScores: [],
                 participantsDisplay: [],
-                criteria: [],
                 eventJudges: [],
                 fields: [
                     { key: 'name' },
@@ -50,7 +61,7 @@
                 ],
                 participantsScoreFields: [
                     { key: 'judgeName', label: 'Judge Name' },
-                    { key: 'tallySummary', label: 'Tally Summary' },
+                    { key: 'tallySummary', label: 'Summary' },
 
                 ],
                 fieldsTotalScores: [
@@ -69,10 +80,6 @@
             getParticipantsScores() {
                 this.api.participantsScores.index().then(async response => {
                     this.participantScores = response.data;
-
-                    await this.api.criteria.index().then(response => {
-                        this.criteria = response.data
-                    });
 
                     await this.api.eventJudges.index().then(response => {
                         this.eventJudges = response.data
@@ -94,7 +101,7 @@
                             let tallySummary = '';
 
                             _.forEach(tallies, (tally) => {
-                                tallySummary += tally.criteria_name + " " + tally.criteria_percentage + "%" + ": " + tally.tally + "/" + tally.criteria_max_tally + "<br>";
+                                tallySummary += tally.criteria_name + " " + tally.criteria_percentage + "%" + ": <strong>" + tally.tally + "/" + tally.criteria_max_tally + "</strong><br>";
                             });
 
                             fakeFields.scores.push({
