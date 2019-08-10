@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="report-page">
         <b-row>
             <b-col>
                 <pie-chart :chartData="chartData"></pie-chart>
@@ -26,6 +26,7 @@
                         </template>
                     </b-table>
                     <b-alert show v-if="!participant.scores.length" variant="warning">No Scores yet</b-alert>
+                    <hr>
                 </div>
             </b-col>
         </b-row>
@@ -39,6 +40,7 @@
                         </template>
                     </b-table>
                     <b-alert show v-if="!participant.scores.length" variant="warning">No Scores yet</b-alert>
+                    <hr>
                 </div>
             </b-col>
         </b-row>
@@ -149,7 +151,7 @@
                             let tallySummary = '';
 
                             _.forEach(tallies, (tally) => {
-                                tallySummary += tally.criteria_name + " " + tally.criteria_percentage + "%" + ": <strong>" + tally.tally + "/" + tally.criteria_max_tally + "</strong><br>";
+                                tallySummary += tally.criteria_name + " (" + tally.criteria_percentage + "%)" + ": <strong>" + tally.tally + "/" + tally.criteria_max_tally + "</strong><br>";
                             });
 
                             fakeFields.scores.push({
@@ -171,5 +173,10 @@
         .print {
             display: none;
         }
+    }
+</style>
+<style>
+    #report-page td[role='cell']::before {
+        text-align: left;
     }
 </style>
